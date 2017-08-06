@@ -1,5 +1,4 @@
 // This is the definition of a schema called ArticleSchema, with an export name is Article
-
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
