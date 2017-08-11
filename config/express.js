@@ -14,11 +14,14 @@ module.exports = function(app, config) {
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
 
+  //define a view engine with layout
   app.engine('handlebars', exphbs({
     layoutsDir: config.root + '/app/views/layouts/',
     defaultLayout: 'main',
     partialsDir: [config.root + '/app/views/partials/']
   }));
+
+  //define location of view templates & view engine
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'handlebars');
 

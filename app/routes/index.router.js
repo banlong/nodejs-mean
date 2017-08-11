@@ -1,10 +1,21 @@
+/*
+* ROUTES DEFINITION FOR WHOLE APPLICATION
+* */
 var express = require('express'),
     router = express.Router(),
-    ctrlIndex = require('../controllers/index.controller');
+    ctrlLocations = require('../controllers/locations.controller'),
+    ctrlOthers = require('../controllers/others.controller');
 
 module.exports = function (app) {
   app.use('/', router);
 };
 
-//Process Index page
-router.get('/', ctrlIndex.getIndex);
+/* Locations pages */
+router.get('/', ctrlLocations.homelist);
+router.get('/location', ctrlLocations.locationInfo);
+router.get('/location/review/new', ctrlLocations.addReview);
+
+/* Other pages */
+router.get('/about', ctrlOthers.about);
+
+
