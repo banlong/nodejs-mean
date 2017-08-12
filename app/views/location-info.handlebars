@@ -7,37 +7,51 @@
   <div class="col-xs-12 col-md-9">
     <div class="row">
       <div class="col-xs-12 col-sm-6">
+        <!--Rating-->
         <p class="rating">
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star-empty"></span>
-          <span class="glyphicon glyphicon-star-empty"></span>
+          {{#each location.rating as |item index|}}
+            {{#if item}}
+              <span class="glyphicon glyphicon-star"></span>
+            {{else}}
+              <span class="glyphicon glyphicon-star-empty"></span>
+            {{/if}}
+          {{/each}}
         </p>
-        <p>125 High Street, Reading, RG6 1PS</p>
+
+        <!--Address-->
+        <p>{{location.address}}</p>
+
+        <!--Opening Hours-->
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h2 class="panel-title">Opening hours</h2>
           </div>
           <div class="panel-body">
-            <p>Monday - Friday : 7:00am - 7:00pm</p>
-            <p>Saturday : 8:00am - 5:00pm</p>
-            <p>Sunday : closed</p>
+            {{#each location.openingTimes as |item index|}}
+              {{#if item.closed}}
+                <p>{{item.days}} : closed</p>
+              {{else}}
+                <p>{{item.days}} : {{item.opening}} - {{item.closing}}</p>
+              {{/if}}
+            {{/each}}
           </div>
         </div>
+
+        <!--Facilities-->
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h2 class="panel-title">Facilities</h2>
           </div>
           <div class="panel-body">
-            <span class="label label-warning">
-              <span class="glyphicon glyphicon-ok"></span>&nbsp;Hot drinks</span>&nbsp;
-            <span class="label label-warning">
-              <span class="glyphicon glyphicon-ok"></span>&nbsp;Food</span>&nbsp;
-            <span class="label label-warning"><span class="glyphicon glyphicon-ok"></span>&nbsp;Premium wifi</span>&nbsp;
+            {{#each location.facilities as |item index|}}
+              <span class="label label-warning">
+              <span class="glyphicon glyphicon-ok"></span>&nbsp;{{item}}</span>&nbsp;
+            {{/each}}
           </div>
         </div>
       </div>
+
+      <!--Location map-->
       <div class="col-xs-12 col-sm-6 location-map">
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -45,12 +59,14 @@
           </div>
           <div class="panel-body">
             <img class="img-responsive img-rounded"
-                 src="http://maps.googleapis.com/maps/api/staticmap?center=51.455041,-0.9690884&amp;
-                 zoom=17&amp;size=400x350&amp;sensor=false&amp;markers=51.455041,-0.9690884&amp;scale=2"/>
+                 src="http://maps.googleapis.com/maps/api/staticmap?center={{location.coords.lat}}, {{location.coords.lng}}&amp;
+                 zoom=17&amp;size=400x350&amp;sensor=false&amp;markers={{location.coords.lat}},{{location.coords.lng}}&amp;scale=2"/>
           </div>
         </div>
       </div>
     </div>
+
+    <!--Customer Review-->
     <div class="row">
       <div class="col-xs-12">
         <div class="panel panel-primary review-panel">
@@ -58,47 +74,36 @@
             <h2 class="panel-title">Customer reviews</h2>
           </div>
           <div class="panel-body review-container">
-            <div class="row">
-              <div class="review">
-                <div class="well well-sm review-header">
-                  <span class="rating"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                  </span>
-                  <span class="reviewAuthor">Simon Holmes</span><small class="reviewTimestamp">16 July 2013</small>
+            <!--Individual Review-->
+            {{#each location.reviews as |review index|}}
+                <div class="row">
+                  <div class="review">
+                    <div class="well well-sm review-header">
+                      <span class="rating">
+                        {{#each review.rating as |star index|}}
+                          {{#if star}}
+                            <span class="glyphicon glyphicon-star"></span>
+                          {{else}}
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                          {{/if}}
+                        {{/each}}
+                      </span>
+                      <span class="reviewAuthor">{{review.author}}</span><small class="reviewTimestamp">{{review.timestamp}}</small>
+                    </div>
+                    <div class="col-xs-12">
+                      <p>{{review.reviewText}}</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-xs-12">
-                  <p>What a great place. I can't say enough good things about it.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="review">
-                <div class="well well-sm review-header">
-                  <span class="rating"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                  </span>
-                  <span class="reviewAuthor">Charlie Chaplin</span><small class="reviewTimestamp">16 June 2013</small>
-                </div>
-                <div class="col-xs-12">
-                  <p>It was okay. Coffee wasn't great, but the wifi was fast.</p>
-                </div>
-              </div>
-            </div>
+            {{/each}}
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col-xs-12 col-md-3">
-    <p class="lead">Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop
-      and get some work done.
+    <p class="lead">{{title}} {{sidebar.context}}
     </p>
-    <p>If you've been and you like it - or if you don't - please leave a review to help other people just like you.</p>
+    <p>{{sidebar.callToAction}}</p>
   </div>
 </div>

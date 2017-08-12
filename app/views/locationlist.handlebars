@@ -1,60 +1,39 @@
+
 <div class="page-header" id="banner">
   <div class="row">
     <div class="col-lg-6">
-      <h1>Loc8r<small>&nbsp;Find places to work with wifi near you!</small></h1>
+      <h1>Loc8r<small>&nbsp;{{strapline}}</small></h1>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-8">
     <div class="row list-group">
-      <div class="col-xs-12 list-group-item">
-        <h4>
-          <a href="/location">Starcups</a><small>&nbsp;
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star-empty"></span>
-          <span class="glyphicon glyphicon-star-empty"></span></small>
-          <span class="badge pull-right badge-default">100m</span></h4>
-        <p class="address">125 High Street, Reading, RG6 1PS</p>
-        <p>
-          <span class="label label-warning">Hot drinks</span>&nbsp;
-          <span class="label label-warning">Food</span>&nbsp;
-          <span class="label label-warning">Premium wifi</span>&nbsp;
-        </p>
-      </div>
-      <div class="col-xs-12 list-group-item">
-        <h4>
-          <a href="/location">Cafe Hero</a><small>&nbsp;
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star-empty"></span></small>
-          <span class="badge pull-right badge-default">200m</span></h4>
-        <p class="address">125 High Street, Reading, RG6 1PS</p>
-        <p>
-          <span class="label label-warning">Hot drinks</span>&nbsp;
-          <span class="label label-warning">Food</span>&nbsp;
-          <span class="label label-warning">Premium wifi</span>&nbsp;</p>
-      </div>
-      <div class="col-xs-12 list-group-item">
-        <h4>
-          <a href="/location">Burger Queen</a><small>&nbsp;
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star"></span>
-          <span class="glyphicon glyphicon-star-empty"></span>
-          <span class="glyphicon glyphicon-star-empty"></span>
-          <span class="glyphicon glyphicon-star-empty"></span></small>
-          <span class="badge pull-right badge-default">250m</span>
-        </h4>
-        <p class="address">125 High Street, Reading, RG6 1PS</p>
-        <p>
-          <span class="label label-warning">Food</span>&nbsp;
-          <span class="label label-warning">Premium wifi</span>&nbsp;
-        </p>
-      </div>
+      <!--using each helper-->
+      {{#each locations}}
+          <div class="col-xs-12 list-group-item">
+              <h4>
+                <a href="/location">{{this.name}}</a>
+                <small>&nbsp;
+                  {{#each this.rating as |item index|}}
+                    {{#if item}}
+                      <span class="glyphicon glyphicon-star"></span>
+                    {{else}}
+                      <span class="glyphicon glyphicon-star-empty"></span>
+                    {{/if}}
+                  {{/each}}
+                </small>
+                <span class="badge pull-right badge-default">100m</span>
+              </h4>
+              <p class="address">{{address}}</p>
+
+              <p>
+                {{#each this.facilities as |item index|}}
+                  <span class="label label-warning">{{item}}</span>&nbsp;
+                {{/each}}
+              </p>
+          </div>
+      {{/each}}
     </div>
   </div>
   <div class="col-xs-12 col-sm-4">
@@ -64,3 +43,4 @@
     </p>
   </div>
 </div>
+
