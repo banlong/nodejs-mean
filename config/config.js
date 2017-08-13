@@ -14,8 +14,7 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    //db: 'mongodb://localhost/Loc8r-dev'
-    db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
+    db: 'mongodb://localhost/Loc8r-dev'
   },
 
   test: {
@@ -24,8 +23,7 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    //db: 'mongodb://localhost/Loc8r-test'
-    db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
+    db: 'mongodb://localhost/Loc8r-test'
   },
 
   production: {
@@ -34,7 +32,6 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    //db: 'mongodb://localhost/Loc8r-prod'
     db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
   }
 };
