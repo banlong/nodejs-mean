@@ -1,3 +1,6 @@
+var mongoose = require('mongoose'),
+  Location = mongoose.model('Location');
+
 
 /* GET 'home' page */
 module.exports.homelist = function(req, res){
@@ -91,3 +94,21 @@ function rating(rate) {
   return rateVal;
 }
 
+
+module.exports.article = function(req, res, next){
+  Location.find(function (err, locations) {
+    if (err) return next(err);
+    res.render('locationlist', {
+      title: 'Create Article'
+    });
+  });
+};
+
+
+module.exports.postArticle = function(req, res, next) {
+  var url = req.body.url;
+  var title = req.body.title;
+  var content = req.body.content;
+  var location = new Location({});
+  location.save();
+};

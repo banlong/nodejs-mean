@@ -21,7 +21,13 @@ db.on('error', function () {
   throw new Error('unable to connect to database at ' + config.db);
 });
 
-console.log("Database:", config.db);
+db.on('connected', function () {
+  console.log('Mongoose connected to ' + config.db);
+});
+
+db.on('disconnected', function () {
+  console.log('Mongoose disconnected');
+});
 
 var models = glob.sync(config.root + '/app/models/*.js');
 models.forEach(function (model) {
