@@ -35,7 +35,7 @@ var config = {
     },
     port: process.env.PORT || 3000,
     //db: 'mongodb://localhost/Loc8r-prod'
-    db: 'mongodb://banlong.com:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
+    db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
   }
 };
 
