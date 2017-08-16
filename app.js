@@ -29,7 +29,7 @@ db.on('disconnected', function () {
   console.log('Mongoose disconnected');
 });
 
-var models = glob.sync(config.root + '/app/models/*.js');
+var models = glob.sync(config.root + '/api/models/*.js');
 models.forEach(function (model) {
   require(model);
 });

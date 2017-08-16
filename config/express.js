@@ -42,6 +42,12 @@ module.exports = function(app, config) {
     require(route)(app);
   });
 
+  //routes for api
+  var routes = glob.sync(config.root + '/api/routes/*.js');
+  routes.forEach(function (route) {
+    require(route)(app);
+  });
+
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
     var err = new Error('Not Found');

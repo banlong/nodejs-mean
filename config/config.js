@@ -14,7 +14,7 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/Loc8r-dev'
+    db: 'mongodb://localhost/Loc8r_dev'
   },
 
   test: {
@@ -23,7 +23,7 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/Loc8r-test'
+    db: 'mongodb://localhost/Loc8r_test'
   },
 
   production: {
