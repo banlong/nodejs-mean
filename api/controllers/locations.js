@@ -23,30 +23,7 @@ module.exports.locationsReadOne = function (req, res) {
   }
 };
 
-//Create a location
-module.exports.locationsCreate = function (req, res) {
-  sendJsonResponse(res, 200, {"locationsCreate" : "success"});
-};
-
-//Update a location
-module.exports.locationsUpdateOne = function (req, res) {
-  sendJsonResponse(res, 200, {"locationsUpdateOne" : "success"});
-};
-
-//Delete a location
-module.exports.locationsDeleteOne = function (req, res) {
-  sendJsonResponse(res, 200, {"locationsDeleteOne" : "success"});
-};
-
-//Get location list
-module.exports.locationList = function (req, res) {
-  Location.find(function (err, locations) {
-    if (err) return next(err);
-    sendJsonResponse(res, 200, {"locations": locations});
-  });
-
-};
-
+//Get 10 nearest locations within 20 km radius
 module.exports.locationsListByDistance = function(req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
@@ -82,11 +59,51 @@ module.exports.locationsListByDistance = function(req, res) {
   });
 };
 
+//Create a location
+module.exports.locationsCreate = function (req, res) {
+  var loc = req.body;
+  Location.create({
+    name: loc.name,
+    address: loc.address,
+    facilities: loc.facilities.split(","),
+    coords: [parseFloat(loc.lng), parseFloat(loc.lat)],
+    openingTimes: [{
+      days: loc.days1,
+      opening: loc.opening1,
+      closing: loc.closing1,
+      closed: loc.closed1
+    }, {
+      days: loc.days2,
+      opening: loc.opening2,
+      closing: loc.closing2,
+      closed: loc.closed2
+    }]
+  }, function(err, location) {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, location);
+    }
+  });
+};
+
+//Update a location
+module.exports.locationsUpdateOne = function (req, res) {
+  sendJsonResponse(res, 200, {"locationsUpdateOne" : "success"});
+};
+
+//Delete a location
+module.exports.locationsDeleteOne = function (req, res) {
+  sendJsonResponse(res, 200, {"locationsDeleteOne" : "success"});
+};
+
+
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
 };
 
+// distance calculation
 var theEarth = (function(){
   var earthRadius = 6371; // km, miles is 3959
   var getDistanceFromRads = function(rads) {
