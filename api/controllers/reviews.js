@@ -1,6 +1,8 @@
 var mongoose = require('mongoose'),
   Location = mongoose.model('Location');
 
+mongoose.Promise = global.Promise;
+
 // get a review by first access to its parent
 module.exports.reviewsReadOne = function (req, res) {
   if (req.params && req.params.locationid) {
@@ -55,8 +57,56 @@ module.exports.reviewsCreate = function (req, res) {
   }
 };
 
+// update a review
 module.exports.reviewsUpdateOne = function (req, res) {
-  sendJsonResponse(res, 200, {"reviewsUpdateOne" : "success"});
+  if (!req.params.locationid || !req.params.reviewid) {
+    sendJsonResponse(res, 404, {
+      "message": "Not found, locationid and reviewid are both required"
+    });
+    return;
+  }
+  Location
+    .findById(req.params.locationid)
+    .select('reviews')        //ONLY TAKE REVIEW FOR RESPONSE
+    .exec(
+      function (err, location) {
+        console.log(location);
+        var thisReview;
+        if (!location) {
+          sendJsonResponse(res, 404, {
+            "message": "locationid not found"
+          });
+          return;
+        } else if (err) {
+          sendJsonResponse(res, 400, err);
+          return;
+        }
+        if (location.reviews && location.reviews.length > 0) {
+          thisReview = location.reviews.id(req.params.reviewid);
+          if (!thisReview) {
+            sendJsonResponse(res, 404, {
+              "message": "reviewid not found"
+            });
+          } else {
+            thisReview.author = req.body.author;
+            thisReview.rating = req.body.rating;
+            thisReview.reviewText = req.body.reviewText;
+            location.save(function (err, location) {
+              if (err) {
+                sendJsonResponse(res, 404, err);
+              } else {
+                updateAverageRating(location._id);
+                sendJsonResponse(res, 200, thisReview);
+              }
+            });
+          }
+        } else {
+          sendJsonResponse(res, 404, {
+            "message": "No review to update"
+          });
+        }
+      }
+    );
 };
 
 module.exports.reviewsDeleteOne = function (req, res) {

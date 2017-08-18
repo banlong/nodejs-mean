@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
   Location = mongoose.model('Location');
+  mongoose.Promise = global.Promise;
 
 //Get one location by Id
 module.exports.locationsReadOne = function (req, res) {
@@ -89,7 +90,50 @@ module.exports.locationsCreate = function (req, res) {
 
 //Update a location
 module.exports.locationsUpdateOne = function (req, res) {
-  sendJsonResponse(res, 200, {"locationsUpdateOne" : "success"});
+  if (!req.params.locationid) {
+    sendJsonResponse(res, 404, {
+      "message": "Not found, locationid is required"
+    });
+    return;
+  }
+  Location.findById(req.params.locationid)
+    .select('-reviews -rating')             //exclude the reviews & rating from return value
+    .exec( function (err, location) {
+      if (!location) {
+        sendJsonResponse(res, 404, {
+          "message": "locationid not found"
+        });
+        return;
+      } else if (err) {
+        sendJsonResponse(res, 400, err);
+        return;
+      }
+
+      var inputLocation = req.body;
+      location.name =    inputLocation.name;
+      location.address =  inputLocation.address;
+      location.facilities = inputLocation.facilities.split(",");
+      location.coords = [parseFloat(inputLocation.lng), parseFloat(inputLocation.lat)];
+      location.openingTimes = [{
+        days:     inputLocation.days1,
+        opening:  inputLocation.opening1,
+        closing:  inputLocation.closing1,
+        closed:   inputLocation.closed1
+      }, {
+        days:     inputLocation.days2,
+        opening:  inputLocation.opening2,
+        closing:  inputLocation.closing2,
+        closed:   inputLocation.closed2
+      }];
+      location.save(function (err, location) {
+        if (err) {
+          sendJsonResponse(res, 404, err);
+        } else {
+          sendJsonResponse(res, 200, location);
+        }
+      });
+    }
+  );
 };
 
 //Delete a location
