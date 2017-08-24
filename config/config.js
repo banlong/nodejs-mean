@@ -14,7 +14,8 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/Loc8r_dev'
+    db: 'mongodb://localhost/Loc8r_dev',
+    apiServer: 'http://localhost:3000'
   },
 
   test: {
@@ -23,7 +24,8 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/Loc8r_test'
+    db: 'mongodb://localhost/Loc8r_test',
+    apiServer: 'http://localhost:3000'
   },
 
   production: {
@@ -32,7 +34,8 @@ var config = {
       name: 'mean'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq'
+    db: 'mongodb://banlong:Sunghiep01@ds127341.mlab.com:27341/heroku_8vjlzglq',
+    apiServer: 'https://damp-beach-73841.herokuapp.com'
   }
 };
 

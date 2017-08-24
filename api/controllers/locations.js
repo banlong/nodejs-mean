@@ -28,6 +28,7 @@ module.exports.locationsReadOne = function (req, res) {
 module.exports.locationsListByDistance = function(req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
+  var maxDistance = parseFloat(req.query.maxDistance);
 
   if (!lng || !lat) {
     sendJsonResponse(res, 404, {
@@ -35,18 +36,24 @@ module.exports.locationsListByDistance = function(req, res) {
     });
     return;
   }
+
   var point = {
     type: "Point",
     coordinates: [lng, lat]
   };
+
   var geoOptions = {
     spherical: true,
-    maxDistance: theEarth.getRadsFromDistance(20),
+    maxDistance: theEarth.getRadsFromDistance(maxDistance),
     num: 10
   };
+
   Location.geoNear(point, geoOptions, function (err, results, stats) {
+
     var locations = [];
     results.forEach(function(doc) {
+
+      console.log("DOC: ", doc);
       locations.push({
         distance: theEarth.getDistanceFromRads(doc.dis),
         name: doc.obj.name,
@@ -138,7 +145,24 @@ module.exports.locationsUpdateOne = function (req, res) {
 
 //Delete a location
 module.exports.locationsDeleteOne = function (req, res) {
-  sendJsonResponse(res, 200, {"locationsDeleteOne" : "success"});
+  var locationid = req.params.locationid;
+  if (locationid) {
+    Location
+      .findByIdAndRemove(locationid)
+      .exec(
+        function (err, location) {
+          if (err) {
+            sendJsonResponse(res, 404, err);
+            return;
+          }
+          sendJsonResponse(res, 204, null);
+        }
+      );
+  } else {
+    sendJsonResponse(res, 404, {
+      "message": "No locationid"
+    });
+  }
 };
 
 
