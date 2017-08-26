@@ -1,6 +1,6 @@
 <div class="row page-header">
   <div class="col-lg-12">
-    <h1>Starcups</h1>
+    <h1>{{title}}</h1>
   </div>
 </div>
 <div class="row">
@@ -52,7 +52,6 @@
       </div>
 
       <!--Location map-->
-      {{location.coords.lng}}  {{location.coords.lat}}
       <div class="col-xs-12 col-sm-6 location-map">
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -71,7 +70,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="panel panel-primary review-panel">
-          <div class="panel-heading"><a class="btn btn-default pull-right" href="/location/review/new">Add review</a>
+          <div class="panel-heading"><a class="btn btn-default pull-right" href="/location/{{location._id}}/review/new">Add review</a>
             <h2 class="panel-title">Customer reviews</h2>
           </div>
           <div class="panel-body review-container">
@@ -89,7 +88,7 @@
                           {{/if}}
                         {{/each}}
                       </span>
-                      <span class="reviewAuthor">{{review.author}}</span><small class="reviewTimestamp">{{review.timestamp}}</small>
+                      <span class="reviewAuthor">{{review.author}}</span><small class="reviewTimestamp">{{review.createdOn}}</small>
                     </div>
                     <div class="col-xs-12">
                       <p>{{review.reviewText}}</p>
