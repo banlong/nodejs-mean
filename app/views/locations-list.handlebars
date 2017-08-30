@@ -1,49 +1,42 @@
+<div ng-controller="locationListCtrl">
+  <div class="page-header" id="banner">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1>
+          {{pageHeader.title}}
+          <small>&nbsp;{{pageHeader.strapline}}</small>
+        </h1>
 
-<div class="page-header" id="banner">
+      </div>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-lg-6">
-      <h1>Loc8r<small>&nbsp;{{strapline}}</small></h1>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-8">
-    <div class="error">{{message}}</div>
-    <div class="row list-group">
+    <div class="col-xs-12 col-sm-8">
+      <div class="error">{{message}}</div>
+      <div class="row list-group">
+        <!--using each helper-->
+        <div class="col-xs-12 list-group-item" ng-repeat="location in data.locations">
+          <h4>
 
-      <!--using each helper-->
-      {{#each locations}}
-          <div class="col-xs-12 list-group-item">
-              <h4>
-
-                <a href="/location/{{this._id}}">{{this.name}}</a>
-                <small>&nbsp;
-                  {{#each this.rating as |item index|}}
-                    {{#if item}}
-                      <span class="glyphicon glyphicon-star"></span>
-                    {{else}}
-                      <span class="glyphicon glyphicon-star-empty"></span>
-                    {{/if}}
-                  {{/each}}
-                </small>
-                <span class="badge pull-right badge-default">{{this.distance}} km</span>
-              </h4>
-              <p class="address">{{address}}</p>
-
-              <p>
-                {{#each this.facilities as |item index|}}
-                  <span class="label label-warning">{{item}}</span>&nbsp;
-                {{/each}}
-              </p>
+            <a href="/location/{[{location._id}]}">{[{location.name}]}</a>
+            <small ng-repeat="rate in location.rating track by $index">&nbsp;
+              <span class="glyphicon glyphicon-star" ng-if="rate"></span>
+              <span class="glyphicon glyphicon-star-empty" ng-if="!rate"></span>
+            </small>
+            <span class="badge pull-right badge-default">{[{location.distance}]} km</span>
+          </h4>
+          <p class="address">{[{location.address}]}</p>
+          <div ng-repeat="facility in location.facilities" style="display: inline">
+              <span class="label label-warning" >{[{facility}]}</span>
           </div>
-      {{/each}}
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <p class="lead">
+        {{sidebar}}
+      </p>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-4">
-    <p class="lead">
-      Looking for wifi and a seat? Loc8r helps you find places to work when out and about.
-      Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.
-    </p>
-  </div>
 </div>
-
