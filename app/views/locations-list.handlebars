@@ -14,23 +14,9 @@
     <div class="col-xs-12 col-sm-8">
       <div class="error">{{message}}</div>
       <div class="row list-group">
-        <!--using each helper-->
         <div class="col-xs-12 list-group-item" ng-repeat="location in data.locations">
-          <h4>
-
-            <a href="/location/{[{location._id}]}">{[{location.name}]}</a>
-            <small ng-repeat="rate in location.rating track by $index">&nbsp;
-              <span class="glyphicon glyphicon-star" ng-if="rate"></span>
-              <span class="glyphicon glyphicon-star-empty" ng-if="!rate"></span>
-            </small>
-            <span class="badge pull-right badge-default">{[{location.distance}]} km</span>
-          </h4>
-          <p class="address">{[{location.address}]}</p>
-          <div ng-repeat="facility in location.facilities" style="display: inline">
-              <span class="label label-warning" >{[{facility}]}</span>
-          </div>
+          <location-bar  location=location></location-bar>
         </div>
-
       </div>
     </div>
     <div class="col-xs-12 col-sm-4">

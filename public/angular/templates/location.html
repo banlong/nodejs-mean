@@ -1,0 +1,12 @@
+<h4>
+  <a href="/location/{[{model.location._id}]}">{[{model.location.name}]}</a>
+  <small ng-repeat="rate in model.location.rating track by $index">&nbsp;
+    <span class="glyphicon glyphicon-star" ng-if="rate"></span>
+    <span class="glyphicon glyphicon-star-empty" ng-if="!rate"></span>
+  </small>
+  <span class="badge pull-right badge-default">{[{model.location.distance | formatDistance}]} </span>
+</h4>
+<p class="address">{[{model.location.address}]}</p>
+<div ng-repeat="facility in model.location.facilities" style="display: inline">
+  <span class="label label-warning" >{[{facility}]}</span>
+</div>
