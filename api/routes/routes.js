@@ -15,12 +15,16 @@ module.exports = function (app) {
 
 // create location
 router.post('/locations', ctrlLocations.locationsCreate);
+
 // get location by id
 router.get('/locations/:locationid', ctrlLocations.locationsReadOne);
+
 // update location
 router.put('/locations/:locationid', ctrlLocations.locationsUpdateOne);
+
 // delete location
 router.delete('/locations/:locationid', ctrlLocations.locationsDeleteOne);
+
 // get location by coordinate
 router.get('/locations', ctrlLocations.locationsListByDistance);
 

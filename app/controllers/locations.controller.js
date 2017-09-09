@@ -7,30 +7,20 @@ module.exports.homelist = function(req, res){
   renderHomepage(req, res);
 };
 
-/* GET 'home' page */
-// module.exports.homelist = function(req, res){
-//   var requestOptions, path;
-//   path = '/api/locations';
-//   requestOptions = {
-//     url: config.apiServer + path,
-//     method: "GET",
-//     json: {},
-//     qs: {
-//       lng: -122.3051316,
-//       lat: 47.5599647,
-//       maxDistance: 20
-//     }
-//   };
-//
-//   //send request to Rest API
-//   request(
-//     requestOptions,
-//     function (err, response, body) {
-//
-//       renderHomepage(req, res, body);
-//     }
-//   );
-// };
+var renderHomepage = function(req, res){
+  res.render('locations-list', {
+    title: 'Loc8r - find a place to work with wifi',
+    pageHeader: {
+      title: 'Loc8r',
+      strapline: 'Find places to work with wifi near you!'
+    },
+    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to" +
+    " work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r" +
+    " help you find the place you're looking for."
+  })
+};
+
+
 
 /* GET 'Location info' page */
 module.exports.locationInfo = function(req, res){
@@ -112,19 +102,6 @@ var getLocationInfo = function (req, res, callback) {
       }
     }
   );
-};
-
-var renderHomepage = function(req, res){
-  res.render('locations-list', {
-    title: 'Loc8r - find a place to work with wifi',
-    pageHeader: {
-      title: 'Loc8r',
-      strapline: 'Find places to work with wifi near you!'
-    },
-    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to" +
-    " work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r" +
-    " help you find the place you're looking for."
-  })
 };
 
 // function renderHomepage(req, res, responseBody) {
